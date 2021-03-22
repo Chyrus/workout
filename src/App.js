@@ -40,6 +40,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
+import ExerciseMain from './components/exerciseMain.component'
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const drawerWidth = 140;
 
@@ -110,10 +112,9 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -136,18 +137,35 @@ export default function App() {
     setSelectedDate(date);
   };
 
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'Exercise',
-  });
+  const [exercisesDisplayed, setExercisesDisplayed] = React.useState(1);
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
+  const addExercise = () => {
+    setExercisesDisplayed(exercisesDisplayed + 1);
+    scroll.scrollToBottom();
+
+  }
+
+  const removeExercise = () => {
+    if (exercisesDisplayed > 1) {
+      setExercisesDisplayed(exercisesDisplayed - 1);
+      scroll.scrollToBottom();
+    }
+  }
+
+
+  // const [state, setState] = React.useState({
+  //   age: '',
+  //   name: 'Exercise',
+  // });
+
+  // const handleChange = (event) => {
+  //   const name = event.target.name;
+  //   setState({
+  //     ...state,
+  //     [name]: event.target.value,
+  //   });
+  // };
+
   function FormRow() {
 
     return (
@@ -278,121 +296,36 @@ export default function App() {
         </Grid>
       </Grid>
     </MuiPickersUtilsProvider>
-    
-    <Divider style={{marginTop: '5px'}}/>
+
+    {exercisesDisplayed >= 1 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 1 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 2 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 3 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 4 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 5 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 6 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 7 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 8 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+    {exercisesDisplayed > 9 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+
+    <Divider style={{margin: theme.spacing(1)}} />
 
     <Grid container align="center">
-      <Grid item xs={1} />
-      <Grid item xs={10}>
-      <FormControl style={{marginTop: '0px'}} className={classes.formControl}>
-        {/* <InputLabel htmlFor="name-native-disabled">Exercise</InputLabel> */}
-        <NativeSelect
-          className={classes.selectEmpty}
-          value={state.name}
-          onChange={handleChange}
-          inputProps={{
-            name: 'name',
-          }}
-        >
-          <option aria-label="None" name="Exercise" disabled>Exercise</option>
-          <optgroup label="Chest">
-            <option value="benchPress">Bench Press</option>
-            <option value="flys">Flys</option>
-          </optgroup>
-          <optgroup label="Legs">
-            <option value="legPress">Leg Press</option>
-            <option value="legCurls">Leg Curls</option>
-          </optgroup>
-        </NativeSelect>
-      </FormControl>
-      </Grid>
-      <Grid item xs={1} />
-    </Grid>
-    
       
-
-    <Grid container align="center">
-      <Grid item xs={1}>
-        <Typography variant="caption">Set</Typography> 
-      </Grid>
-      <Grid item xs={4}>
-      <Typography variant="caption">Prev. Best</Typography> 
-      </Grid>
-      <Grid item xs={5}>
-      <Typography variant="caption">Weight(lbs)</Typography> 
-      </Grid>
-      <Grid item xs={2}>
-      <Typography variant="caption">Reps</Typography> 
-      </Grid>
-    </Grid>
-
-    <Grid container align="center" alignItems="center">
-      <Grid item xs={1}>
-        <Typography variant="body2">1</Typography> 
-      </Grid>
-      <Grid item xs={4}>
-      <Typography variant="body2">80 x 10</Typography> 
-      </Grid>
-      <Grid item xs={5}>
-      <Typography variant="body2">
-        <form>
-          <TextField style={{marginRight: '5px'}} type="number" size="small" id="outlined" variant="outlined" />
-        </form>
-      </Typography> 
-      </Grid>
-      <Grid item xs={2}>
-      <Typography variant="body2">
-        <form>
-          <TextField type="number" size="small" id="outlined" variant="outlined" />
-        </form>
-      </Typography> 
-      </Grid>
-    </Grid>
-
-    <Grid style={{marginTop: '5px'}} container align="center" alignItems="center">
-      <Grid item xs={1}>
-        <Typography variant="body2">2</Typography> 
-      </Grid>
-      <Grid item xs={4}>
-      <Typography variant="body2">-</Typography> 
-      </Grid>
-      <Grid item xs={5}>
-      <Typography variant="body2">
-        <form>
-          <TextField style={{marginRight: '5px'}} type="number" size="small" id="outlined" variant="outlined" />
-        </form>
-      </Typography> 
-      </Grid>
-      <Grid item xs={2}>
-      <Typography variant="body2">
-        <form>
-          <TextField type="number" size="small" id="outlined" variant="outlined" />
-        </form>
-      </Typography> 
-      </Grid>
-    </Grid>
-
-    <Grid style={{marginTop: '10px'}} container align="center">
-      <Grid item xs={3} />
       <Grid item xs={6}>
-        <Button variant="contained" color="secondary">
-          Add Set
-        </Button>
-      </Grid>
-      <Grid item xs={3} />
-    </Grid>        
-    
-    <Divider style={{margin: '10px'}}/>
-
-    <Grid container align="center">
-      <Grid item xs={3} />
-      <Grid item xs={6}>
-        <Button variant="contained" color="primary">
+        <Button style={{width: '90%'}} size="medium" variant="contained" color="primary" onClick={addExercise}>
           Add Exercise
         </Button>
       </Grid>
-      <Grid item xs={3} />
+      <Grid item xs={6}>
+        <Button style={{width: '90%'}} size="medium" variant="contained" color="secondary" onClick={removeExercise}>
+          Remove Exercise
+        </Button>
+      </Grid>
+      
     </Grid>
+    
+    
         {/* <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0}>
             <FormRow />
