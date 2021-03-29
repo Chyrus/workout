@@ -11,6 +11,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { green } from '@material-ui/core/colors';
 import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 
 
 const ExerciseMain = ({ classes, theme, toggleExercise }) => {
@@ -32,8 +34,10 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
 
     return (
         <div class="exercise">
+            <Paper elevation={1}>
             <Divider style={{marginTop: theme.spacing(1)}}/>
-
+            <Box style={{margin: theme.spacing(1)}} >
+            <Paper elevation={10} variant="outlined">
             <Grid container xs={12}>
                 {/* <Grid item xs={1}>
                     <IconButton style={{color: green[300]}} edge="start" aria-label="add a set" onClick={addSet}>
@@ -41,7 +45,9 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
                     </IconButton>
                 </Grid> */}
                 {/* <Grid item xs={1} /> */}
+                
                 <Grid item xs={10}>
+                    
                     <FormControl style={{marginTop: '0px', width: '100%'}} className={classes.formControl}>
                         <NativeSelect
                         className={classes.selectEmpty}
@@ -60,15 +66,19 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
                         </optgroup>
                         </NativeSelect>
                     </FormControl>
-                    </Grid>
-                    <Grid item xs={1}></Grid> 
-                    <Grid item xs={1}>
-                        <IconButton edge="start" aria-label="delete" onClick={toggleExercise}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Grid>
                 </Grid>
+                <Grid item xs={1}></Grid> 
+                <Grid item xs={1}>
+                    <IconButton edge="start" aria-label="delete" onClick={toggleExercise}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Grid>
+            </Grid>
+            </Paper>
+            </Box>
 
+            <Box style={{margin: theme.spacing(1)}} >
+            <Paper elevation={10} variant="outlined">           
             <Grid container align="center">
                 <Grid item xs={1}>
                     <Typography variant="caption">Set</Typography> 
@@ -102,6 +112,9 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
             <Grid item xs={2}></Grid> 
 
           </Grid>
+          </Paper>
+          </Box>  
+          </Paper>
         </div>   
     )
 }

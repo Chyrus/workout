@@ -6,10 +6,14 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 
 const DateTimePicker = ({ selectedDate, handleDateChange, classes, theme }) => {
 
     return (
+        <Paper elevation={3}>
+        <Box style={{marginLeft: theme.spacing(1), marginRight: theme.spacing(1)}}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -41,6 +45,8 @@ const DateTimePicker = ({ selectedDate, handleDateChange, classes, theme }) => {
                 </Grid>
             </Grid>
         </MuiPickersUtilsProvider>
+        </Box>
+        </Paper>
     )
 }
 

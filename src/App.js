@@ -19,6 +19,14 @@ import { ThemeProvider } from '@material-ui/styles';
 import DateTimePicker from './components/dateTimePicker.component'
 import purple from '@material-ui/core/colors/purple';
 import BottomNav from './components/bottomNav.component'
+import Paper from '@material-ui/core/Paper';
+// import Image from './media/image.jpg'; // Import using relative path
+
+// const styles = {
+//   paperContainer: {
+//       backgroundImage: `url(${Image})`
+//   }
+// };
 
 const customTheme = createMuiTheme({
   palette: {
@@ -232,7 +240,11 @@ const toggleExerciseTen = () => {
   // main logic
   return (
     <ThemeProvider theme={customTheme}>
+      
     <div className={classes.root}>
+    
+              
+            
       <CssBaseline />
 
       {/* <TopBar drawerOpen={drawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} classes={classes} theme={theme} />
@@ -247,8 +259,13 @@ const toggleExerciseTen = () => {
         <div className={classes.drawerHeader} /> */}
         
         <Container maxWidth="xs">
+        {/* <Paper style={styles.paperContainer}> */}
+
+          <Divider style={{margin: theme.spacing(1)}}/>
     
           <DateTimePicker selectedDate={selectedDate} handleDateChange={handleDateChange} classes={classes} theme={theme} />
+
+          <Divider style={{margin: theme.spacing(1)}} />
 
           {exerciseOneVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseOne}/> : null}
           {exerciseTwoVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseTwo}/> : null}
@@ -263,8 +280,9 @@ const toggleExerciseTen = () => {
 
 
 
-          <Divider style={{margin: theme.spacing(1)}} />
+          <Divider style={{margin: theme.spacing(1), marginBottom: 0}} />
 
+          <Paper elevation={3}>
           <Grid container align="center"> 
             <Grid item xs={12}>
               <Button style={{fontSize: '14px', width: '90%', minHeight: '30px', margin: theme.spacing(1)}} size="medium" variant="contained" color='primary' onClick={addExercise}>
@@ -277,21 +295,22 @@ const toggleExerciseTen = () => {
               </Button>
             </Grid>  */}
           </Grid>
+          </Paper>
 
-          <Divider  style={{margin: theme.spacing(1), marginBottom: '120px'}}/>
+          <Divider  style={{margin: theme.spacing(1), marginTop: 0, marginBottom: '120px'}}/>
 
           <Grid container align="center"> 
             <Grid item xs={12}>
               
             </Grid> 
           </Grid>
-          
+          {/* </Paper> */}
         </Container>
         
         {/* <Button className={classes.stickAboveBottomNav} style={{marginTop: theme.spacing(1), marginBottom: 0, fontSize: '16px', width: '100%', minHeight: '50px', backgroundColor: customTheme.palette.primary.light}} size="large" variant="contained">
                 End Workout
         </Button> */}
-
+        
         <Button className={classes.stickAboveBottomNav} style={{marginTop: theme.spacing(1), marginBottom: 0, fontSize: '16px', width: '100%', minHeight: '50px', backgroundColor: customTheme.palette.secondary.light}} size="large" variant="contained">
                 End Workout
         </Button>
@@ -305,7 +324,7 @@ const toggleExerciseTen = () => {
        {/* </main> */}
 
        
-
+       
     </div>
   
     

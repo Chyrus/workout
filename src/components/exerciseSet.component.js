@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
 import red from '@material-ui/core/colors/red';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 // const ExerciseSet = ({ classes, theme, setNumber }) => {
 
@@ -78,6 +79,7 @@ const ExerciseSet = ({ theme, setNumber, setsDisplayed, removeSet }) => {
                     </IconButton>
                 </Grid>
             </Grid>
+            <Divider style={{margin: theme.spacing(1)}}/>
         </div>   
     )
 }
