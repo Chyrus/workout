@@ -12,13 +12,15 @@ import Box from '@material-ui/core/Box';
 const DateTimePicker = ({ selectedDate, handleDateChange, classes, theme }) => {
 
     return (
-        <Paper elevation={3}>
-        <Box style={{marginLeft: theme.spacing(1), marginRight: theme.spacing(1)}}>
+        <Box style={{marginBottom: 12}}>
+        <Paper elevation={16} square={true}>
+        
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={2}>
+            <Box style={{margin: theme.spacing(1)}} >
+            <Grid container spacing={1}>
                 <Grid item xs={6}>
                     <KeyboardDatePicker
-                    margin="normal"
+                    // marginTop="10px"
                     id="date-picker-dialog"
                     label="Date"
                     format="MM/dd/yy"
@@ -31,9 +33,10 @@ const DateTimePicker = ({ selectedDate, handleDateChange, classes, theme }) => {
                     InputAdornmentProps={{ edge: 'end'}}
                     />
                 </Grid>
+                
                 <Grid item xs={6}>
                     <KeyboardTimePicker
-                    margin="normal"
+                    // margin="normal"
                     id="time-picker"
                     label="Time"
                     value={selectedDate}
@@ -44,9 +47,11 @@ const DateTimePicker = ({ selectedDate, handleDateChange, classes, theme }) => {
                     />
                 </Grid>
             </Grid>
+            </Box>
         </MuiPickersUtilsProvider>
-        </Box>
+        
         </Paper>
+        </Box>
     )
 }
 

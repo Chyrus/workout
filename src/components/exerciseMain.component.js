@@ -13,7 +13,25 @@ import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, 
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import { createMuiTheme } from '@material-ui/core/styles';
 
+const customTheme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        light: '#7e57c2',
+        main: '#673AB7',
+        dark: '#512DA8',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#6ec6ff',
+        main: '#2196F3',
+        dark: '#0069c0',
+        contrastText: '#000',
+      },
+    },
+  });
 
 const ExerciseMain = ({ classes, theme, toggleExercise }) => {
 
@@ -34,10 +52,12 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
 
     return (
         <div class="exercise">
-            <Paper elevation={1}>
-            <Divider style={{marginTop: theme.spacing(1)}}/>
-            <Box style={{margin: theme.spacing(1)}} >
-            <Paper elevation={10} variant="outlined">
+            
+            <Box style={{marginTop: theme.spacing(1), marginBottom: 5}} >
+            <Paper elevation={16} square={true}>
+
+            <Box style={{marginBottom: 2}}>
+                <Paper style={{margin: 3, backgroundColor: customTheme.palette.primary.main}} elevation={3} square={true}>
             <Grid container xs={12}>
                 {/* <Grid item xs={1}>
                     <IconButton style={{color: green[300]}} edge="start" aria-label="add a set" onClick={addSet}>
@@ -46,9 +66,13 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
                 </Grid> */}
                 {/* <Grid item xs={1} /> */}
                 
+                
+
+                
                 <Grid item xs={10}>
+
                     
-                    <FormControl style={{marginTop: '0px', width: '100%'}} className={classes.formControl}>
+                    <FormControl style={{marginTop: '0px', width: '95%'}} className={classes.formControl}>
                         <NativeSelect
                         className={classes.selectEmpty}
                         inputProps={{
@@ -66,19 +90,23 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
                         </optgroup>
                         </NativeSelect>
                     </FormControl>
+
                 </Grid>
-                <Grid item xs={1}></Grid> 
-                <Grid item xs={1}>
-                    <IconButton edge="start" aria-label="delete" onClick={toggleExercise}>
+                
+                {/* <Grid item xs={1}></Grid>  */}
+                <Grid item xs={2}>
+
+                    <IconButton edge="end" aria-label="delete" onClick={toggleExercise}>
                         <DeleteIcon />
                     </IconButton>
+
                 </Grid>
             </Grid>
             </Paper>
             </Box>
 
-            <Box style={{margin: theme.spacing(1)}} >
-            <Paper elevation={10} variant="outlined">           
+            <Box style={{marginBottom: 2}}>
+                <Paper elevation={3} square={true}>
             <Grid container align="center">
                 <Grid item xs={1}>
                     <Typography variant="caption">Set</Typography> 
@@ -93,6 +121,8 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
                 <Typography variant="caption">Reps</Typography> 
                 </Grid>
             </Grid>
+            </Paper>
+            </Box>
 
             {setsDisplayed >= 1 ? <ExerciseSet theme={theme} setNumber={1} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
             {setsDisplayed > 1 ? <ExerciseSet theme={theme} setNumber={2} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
@@ -103,18 +133,16 @@ const ExerciseMain = ({ classes, theme, toggleExercise }) => {
             {setsDisplayed > 6 ? <ExerciseSet theme={theme} setNumber={7} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
 
             <Grid container align="center">
-            <Grid item xs={2}></Grid> 
-            <Grid item xs={8}>
-              <Button style={{fontSize: '14px', width: '90%', minHeight: '30px', margin: theme.spacing(1)}} size="small" variant="contained" color='secondary' onClick={addSet}>
+            <Grid item xs={12}>
+              <Button style={{fontSize: '13px', width: '90%', minHeight: '30px', margin: 5, backgroundColor: customTheme.palette.secondary.light}} size="small" variant="contained"  onClick={addSet}>
                 Add Set
               </Button>
             </Grid>
-            <Grid item xs={2}></Grid> 
 
           </Grid>
-          </Paper>
-          </Box>  
-          </Paper>
+            
+            </Paper>
+          </Box>
         </div>   
     )
 }
