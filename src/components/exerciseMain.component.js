@@ -10,9 +10,10 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add';
 import { green } from '@material-ui/core/colors';
 import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import Button from '@material-ui/core/Button'
 
 
-const ExerciseMain = ({ classes, theme }) => {
+const ExerciseMain = ({ classes, theme, toggleExercise }) => {
 
     const [setsDisplayed, setSetsDisplayed] = React.useState(1);
 
@@ -34,13 +35,13 @@ const ExerciseMain = ({ classes, theme }) => {
             <Divider style={{marginTop: theme.spacing(1)}}/>
 
             <Grid container xs={12}>
-                <Grid item xs={1}>
+                {/* <Grid item xs={1}>
                     <IconButton style={{color: green[300]}} edge="start" aria-label="add a set" onClick={addSet}>
                         <AddIcon />
                     </IconButton>
-                </Grid>
-                <Grid item xs={1} />
-                <Grid item xs={8}>
+                </Grid> */}
+                {/* <Grid item xs={1} /> */}
+                <Grid item xs={10}>
                     <FormControl style={{marginTop: '0px', width: '100%'}} className={classes.formControl}>
                         <NativeSelect
                         className={classes.selectEmpty}
@@ -60,9 +61,9 @@ const ExerciseMain = ({ classes, theme }) => {
                         </NativeSelect>
                     </FormControl>
                     </Grid>
-                    <Grid item xs={1} />
+                    <Grid item xs={1}></Grid> 
                     <Grid item xs={1}>
-                        <IconButton edge="end" aria-label="delete" onClick={removeSet}>
+                        <IconButton edge="start" aria-label="delete" onClick={toggleExercise}>
                             <DeleteIcon />
                         </IconButton>
                     </Grid>
@@ -72,10 +73,10 @@ const ExerciseMain = ({ classes, theme }) => {
                 <Grid item xs={1}>
                     <Typography variant="caption">Set</Typography> 
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                 <Typography variant="caption">Prev. Best</Typography> 
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={4}>
                 <Typography variant="caption">Weight(lbs)</Typography> 
                 </Grid>
                 <Grid item xs={2}>
@@ -83,14 +84,24 @@ const ExerciseMain = ({ classes, theme }) => {
                 </Grid>
             </Grid>
 
-            {setsDisplayed >= 1 ? <ExerciseSet classes={classes} theme={theme} setNumber={1}/> : null}
-            {setsDisplayed > 1 ? <ExerciseSet classes={classes} theme={theme} setNumber={2}/> : null}
-            {setsDisplayed > 2 ? <ExerciseSet classes={classes} theme={theme} setNumber={3}/> : null}
-            {setsDisplayed > 3 ? <ExerciseSet classes={classes} theme={theme} setNumber={4}/> : null}
-            {setsDisplayed > 4 ? <ExerciseSet classes={classes} theme={theme} setNumber={5}/> : null}
-            {setsDisplayed > 5 ? <ExerciseSet classes={classes} theme={theme} setNumber={6}/> : null}
-            {setsDisplayed > 6 ? <ExerciseSet classes={classes} theme={theme} setNumber={7}/> : null}
+            {setsDisplayed >= 1 ? <ExerciseSet theme={theme} setNumber={1} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 1 ? <ExerciseSet theme={theme} setNumber={2} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 2 ? <ExerciseSet theme={theme} setNumber={3} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 3 ? <ExerciseSet theme={theme} setNumber={4} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 4 ? <ExerciseSet theme={theme} setNumber={5} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 5 ? <ExerciseSet theme={theme} setNumber={6} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+            {setsDisplayed > 6 ? <ExerciseSet theme={theme} setNumber={7} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
 
+            <Grid container align="center">
+            <Grid item xs={2}></Grid> 
+            <Grid item xs={8}>
+              <Button style={{fontSize: '14px', width: '90%', minHeight: '30px', margin: theme.spacing(1)}} size="small" variant="contained" color='secondary' onClick={addSet}>
+                Add Set
+              </Button>
+            </Grid>
+            <Grid item xs={2}></Grid> 
+
+          </Grid>
         </div>   
     )
 }

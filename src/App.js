@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import 'date-fns';
-
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import ExerciseMain from './components/exerciseMain.component'
 import SideMenu from './components/SideMenu.component'
@@ -17,20 +17,22 @@ import { blue } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import DateTimePicker from './components/dateTimePicker.component'
+import purple from '@material-ui/core/colors/purple';
+import BottomNav from './components/bottomNav.component'
 
 const customTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      light: '#b085f5',
-      main: '#7e57c2',
-      dark: '#4d2c91',
+      light: '#7e57c2',
+      main: '#673AB7',
+      dark: '#512DA8',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#88ffff',
-      main: '#4dd0e1',
-      dark: '#009faf',
+      light: '#6ec6ff',
+      main: '#2196F3',
+      dark: '#0069c0',
       contrastText: '#000',
     },
   },
@@ -126,6 +128,17 @@ const useStyles = makeStyles((theme) => ({
   palette: {
     primary: blue,
   },
+  stickToBottom: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0
+  },
+  stickAboveBottomNav: {
+    width: '100%',
+    position: 'fixed',
+    bottom: '55px',
+    justifyContent: 'center'
+  }
 }));
 
 export default function App() {
@@ -149,18 +162,72 @@ export default function App() {
   };
 
   // initializes exercises state and creates click handlers
-  const [exercisesDisplayed, setExercisesDisplayed] = React.useState(1);
-  const addExercise = () => {
-    setExercisesDisplayed(exercisesDisplayed + 1);
-    scroll.scrollToBottom();
 
+  const addExercise = () => {
+    if (!exerciseOneVisible) {toggleExerciseOne()}
+    else if (!exerciseTwoVisible) {toggleExerciseTwo()}
+    else if (!exerciseThreeVisible) {toggleExerciseThree()}
+    else if (!exerciseFourVisible) {toggleExerciseFour()}
+    else if (!exerciseFiveVisible) {toggleExerciseFive()}
+    else if (!exerciseSixVisible) {toggleExerciseSix()}
+    else if (!exerciseSevenVisible) {toggleExerciseSeven()}
+    else if (!exerciseEightVisible) {toggleExerciseEight()}
+    else if (!exerciseNineVisible) {toggleExerciseNine()}
+    else if (!exerciseTenVisible) {toggleExerciseTen()}
+    scroll.scrollToBottom();
   }
-  const removeExercise = () => {
-    if (exercisesDisplayed > 1) {
-      setExercisesDisplayed(exercisesDisplayed - 1);
-      scroll.scrollToBottom();
-    }
-  }
+
+
+const [exerciseOneVisible, setExerciseOneVisible] = React.useState(true);
+const [exerciseTwoVisible, setExerciseTwoVisible] = React.useState(false);
+const [exerciseThreeVisible, setExerciseThreeVisible] = React.useState(false);
+const [exerciseFourVisible, setExerciseFourVisible] = React.useState(false);
+const [exerciseFiveVisible, setExerciseFiveVisible] = React.useState(false);
+const [exerciseSixVisible, setExerciseSixVisible] = React.useState(false);
+const [exerciseSevenVisible, setExerciseSevenVisible] = React.useState(false);
+const [exerciseEightVisible, setExerciseEightVisible] = React.useState(false);
+const [exerciseNineVisible, setExerciseNineVisible] = React.useState(false);
+const [exerciseTenVisible, setExerciseTenVisible] = React.useState(false);
+
+const toggleExerciseOne = () => {
+  setExerciseOneVisible(!exerciseOneVisible)
+}
+
+const toggleExerciseTwo = () => {
+  setExerciseTwoVisible(!exerciseTwoVisible)
+}
+
+const toggleExerciseThree = () => {
+  setExerciseThreeVisible(!exerciseThreeVisible)
+}
+
+const toggleExerciseFour = () => {
+  setExerciseFourVisible(!exerciseFourVisible)
+}
+
+const toggleExerciseFive = () => {
+  setExerciseFiveVisible(!exerciseFiveVisible)
+}
+
+const toggleExerciseSix = () => {
+  setExerciseSixVisible(!exerciseSixVisible)
+}
+
+const toggleExerciseSeven = () => {
+  setExerciseSevenVisible(!exerciseSevenVisible)
+}
+
+const toggleExerciseEight = () => {
+  setExerciseEightVisible(!exerciseEightVisible)
+}
+
+const toggleExerciseNine = () => {
+  setExerciseNineVisible(!exerciseNineVisible)
+}
+
+const toggleExerciseTen = () => {
+  setExerciseTenVisible(!exerciseTenVisible)
+}
 
   // main logic
   return (
@@ -168,7 +235,7 @@ export default function App() {
     <div className={classes.root}>
       <CssBaseline />
 
-      <TopBar drawerOpen={drawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} classes={classes} theme={theme} />
+      {/* <TopBar drawerOpen={drawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} classes={classes} theme={theme} />
 
       <SideMenu drawerOpen={drawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} classes={classes} theme={theme} />
 
@@ -177,42 +244,73 @@ export default function App() {
           [classes.contentShift]: drawerOpen,
         })}
       >
-        <div className={classes.drawerHeader} />
-        <Container>
+        <div className={classes.drawerHeader} /> */}
+        
+        <Container maxWidth="xs">
     
           <DateTimePicker selectedDate={selectedDate} handleDateChange={handleDateChange} classes={classes} theme={theme} />
 
-          {exercisesDisplayed >= 1 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 1 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 2 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 3 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 4 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 5 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 6 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 7 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 8 ? <ExerciseMain classes={classes} theme={theme}/> : null}
-          {exercisesDisplayed > 9 ? <ExerciseMain classes={classes} theme={theme}/> : null}
+          {exerciseOneVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseOne}/> : null}
+          {exerciseTwoVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseTwo}/> : null}
+          {exerciseThreeVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseThree}/> : null}
+          {exerciseFourVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseFour}/> : null}
+          {exerciseFiveVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseFive}/> : null}
+          {exerciseSixVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseSix}/> : null}
+          {exerciseSevenVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseSeven}/> : null}
+          {exerciseEightVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseEight}/> : null}
+          {exerciseNineVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseNine}/> : null}
+          {exerciseTenVisible ? <ExerciseMain classes={classes} theme={theme} toggleExercise={toggleExerciseTen}/> : null}
+
+
 
           <Divider style={{margin: theme.spacing(1)}} />
 
           <Grid container align="center"> 
-            <Grid item xs={6}>
-              <Button style={{width: '90%'}} size="medium" variant="contained" color='primary' onClick={addExercise}>
+            <Grid item xs={12}>
+              <Button style={{fontSize: '14px', width: '90%', minHeight: '30px', margin: theme.spacing(1)}} size="medium" variant="contained" color='primary' onClick={addExercise}>
                 Add Exercise
               </Button>
             </Grid>
-            <Grid item xs={6}>
-              <Button style={{width: '90%'}} size="medium" variant="contained" color="secondary" onClick={removeExercise}>
+            {/* <Grid item xs={12}>
+              <Button style={{fontSize: '11px', width: '90%', minHeight: '30px', margin: theme.spacing(1)}} size="small" variant="contained" color="secondary" >
                 Remove Exercise
               </Button>
+            </Grid>  */}
+          </Grid>
+
+          <Divider  style={{margin: theme.spacing(1), marginBottom: '120px'}}/>
+
+          <Grid container align="center"> 
+            <Grid item xs={12}>
+              
             </Grid> 
           </Grid>
           
-          
         </Container>
-       </main>
+        
+        {/* <Button className={classes.stickAboveBottomNav} style={{marginTop: theme.spacing(1), marginBottom: 0, fontSize: '16px', width: '100%', minHeight: '50px', backgroundColor: customTheme.palette.primary.light}} size="large" variant="contained">
+                End Workout
+        </Button> */}
+
+        <Button className={classes.stickAboveBottomNav} style={{marginTop: theme.spacing(1), marginBottom: 0, fontSize: '16px', width: '100%', minHeight: '50px', backgroundColor: customTheme.palette.secondary.light}} size="large" variant="contained">
+                End Workout
+        </Button>
+
+
+        <BottomNav/>
+
+
+        
+
+       {/* </main> */}
+
+       
 
     </div>
+  
+    
+
     </ThemeProvider>
+    
   );  
 }
