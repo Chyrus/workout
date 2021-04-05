@@ -1,5 +1,4 @@
 import React from 'react';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -7,9 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ExerciseSet from './exerciseSet.component';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete'
-import AddIcon from '@material-ui/icons/Add';
-import { green } from '@material-ui/core/colors';
-import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import {  animateScroll as scroll } from 'react-scroll'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
