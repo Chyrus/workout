@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 // MUI
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,19 +9,23 @@ import { ThemeProvider } from '@material-ui/styles';
 
 // components
 import Workout from './components/workout.component';
-import Signup from './components/signup.component';
-import LoginForm from './components/loginForm.component'
+import SignUp from './components/SignUpcomponent';
 import Logout from './components/logout.component'
 import BottomNav from './components/bottomNav.component'
+import LogIn from './components/LogIn.component'
+import AccountDrawer from './components/LogIn.component'
 
 // style
 import theme from './style/theme';
+
+// other
 import axios from 'axios'
 
 export default function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [username, setUsername] = React.useState(null);
+  const [bottomNavValue, setBottomNavValue] = React.useState(10);
 
   const updateUser = (loggedIn, username) => {
     setLoggedIn(loggedIn);
@@ -52,46 +56,33 @@ export default function App() {
 
       <CssBaseline />
 
-      
-        {loggedIn ? <Typography>Hello {username}</Typography> : null}
-      
+        {/* {loggedIn ? <Typography>Hello {username}</Typography> : null} */}
 
-      <BrowserRouter>
+        {loggedIn ? 
+          <Route exact path="/" render={() => <Workout />} />
+        :
+          <Route exact path="/" render={() => <LogIn updateUser={updateUser} />} />
+        }
+           
+        {loggedIn ?
+          <Route path="/login" render={() => <Workout />} />
+        :
+          <Route path="/login" render={() => <LogIn updateUser={updateUser} />} />
+        }
 
-        <Route
-          exact path="/"
-          render={() =>
-            <Workout />}
-        />
+        {loggedIn ?
+          <Route path="/signup" render={() => <Workout />} />
+        :
+          <Route path="/signup" render={() => <SignUp/>} />
+        }
 
-        <Route
-          path="/login"
-          render={() =>
-            <LoginForm
-              updateUser={updateUser}
-            />}
-        />
+        {loggedIn ?
+          <Route path="/logout" render={() => <Logout updateUser={updateUser} getUser={getUser} />} />
+        :
+          <Route path="/logout" render={() => <LogIn getUser={getUser} />} />
+        }
 
-        <Route
-          path="/signup"
-          render={() =>
-            <Signup/>}
-        />
-
-        <Route
-          path="/logout"
-          render={() =>
-            <Logout
-              updateUser={updateUser}
-              getUser={getUser}
-            />}
-        />
-
-      
-
-      <BottomNav/>
-
-      </BrowserRouter>
+      {loggedIn ? <BottomNav value={bottomNavValue} setValue={setBottomNavValue} /> : null}
       
     </ThemeProvider>
   );  

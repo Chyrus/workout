@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 
 export default function Logout( {updateUser, getUser }) {
 
-
     useEffect(() => {
         axios.post('/user/logout').then(response => {
             console.log('Get user response: ')
@@ -22,7 +21,7 @@ export default function Logout( {updateUser, getUser }) {
   
     return (
         
-     <Typography>Logged Out</Typography>
+        <Redirect to={{ pathname: '/login' }} />
 
     );
   }
