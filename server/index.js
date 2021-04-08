@@ -7,8 +7,9 @@ const userRouter = require('./routes/user')
 const exerciseRouter = require('./routes/exercise.router')
 const MongoStore = require('connect-mongo')(session);
 const passport = require('./passport');
+const path = require('path');
 
-const apiPort = 5000
+const apiPort = 5001
 const app = express()
 
 app.use(morgan('dev'))
@@ -29,16 +30,16 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session()) // calls the deserializeUser
 
-
+app.use(express.static(path.resolve(__dirname + '/../client/build/')))
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
 app.use('/user', userRouter)
 
 app.use('/api', exerciseRouter)
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../client/build/index.html'));
+});
 
 
 
