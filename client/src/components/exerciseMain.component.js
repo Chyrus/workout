@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React , { useEffect }from 'react';
 import {  animateScroll as scroll } from 'react-scroll'
 
 // MUI
@@ -13,9 +13,16 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Slide from '@material-ui/core/Slide';
 
 // Components
-import ExerciseSet from './exerciseSet.component';
+import ExerciseSet from './ExerciseSet.component';
+
+// Other
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -31,17 +38,50 @@ const ExerciseMain = ({ toggleExercise }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const [setsDisplayed, setSetsDisplayed] = React.useState(1);
+    const [setsDisplayed, setSetsDisplayed] = React.useState( 1 );
+    const [exercisesList, setExercisesList] = React.useState( [] );
+
+    const [fadesList, setFadesList] = React.useState( [true, false, false, false, false, false, false, false, false, false] );
+    const fadeTimeout = {'enter': 500, 'exit': 150}
+
+    const weightRefs = React.useRef([React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()]);
+    const repRefs = React.useRef([React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()]);
+
+    useEffect(() => {
+        // axios.get(`https://workout.jakeku.dev/api/exercises`)
+        axios.get('/api/exercises')
+            .then(res => {
+                const list = res.data.data;
+                list.sort(function(a,b){ 
+                    var x = a.name < b.name? -1:1; 
+                    return x; 
+                });
+                setExercisesList(list);
+                console.log(fadesList)
+        })}, [])
 
     const addSet = () => {
-        setSetsDisplayed(setsDisplayed + 1);
-        scroll.scrollToBottom();
+        const oldArr = [...fadesList];
+        oldArr[setsDisplayed ] = true;
+        setFadesList(oldArr);
+        if (setsDisplayed < 7) {setSetsDisplayed(setsDisplayed + 1);
+            scroll.scrollToBottom();
+        }
+        
+
+
       };
 
     const removeSet = () => {
         if (setsDisplayed > 1) {
+            const oldArr = [...fadesList];
+            oldArr[setsDisplayed - 1] = false;
+            setFadesList(oldArr);
+
             setSetsDisplayed(setsDisplayed - 1);
             scroll.scrollToBottom();
+
+            
         }
         
     }
@@ -70,14 +110,10 @@ const ExerciseMain = ({ toggleExercise }) => {
                                         }}
                                         >
                                         <option aria-label="None" value="" placeholder>Select exercise</option>
-                                        <optgroup label="Chest">
-                                            <option value="benchPress">Bench Press</option>
-                                            <option value="flys">Flys</option>
-                                        </optgroup>
-                                        <optgroup label="Legs">
-                                            <option value="legPress">Leg Press</option>
-                                            <option value="legCurls">Leg Curls</option>
-                                        </optgroup>
+                                        {exercisesList.map((exercise) => 
+                                                <option value="benchPress">{exercise.name}</option>
+                                        )}
+
                                         </NativeSelect>
 
                                     </FormControl>
@@ -124,20 +160,48 @@ const ExerciseMain = ({ toggleExercise }) => {
                         
                     </Box>
 
-                    {setsDisplayed >= 1 ? <ExerciseSet setNumber={1} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 1 ? <ExerciseSet setNumber={2} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 2 ? <ExerciseSet setNumber={3} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 3 ? <ExerciseSet setNumber={4} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 4 ? <ExerciseSet setNumber={5} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 5 ? <ExerciseSet setNumber={6} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
-                    {setsDisplayed > 6 ? <ExerciseSet setNumber={7} setsDisplayed={setsDisplayed} removeSet={removeSet}/> : null}
+                    {/* {setsDisplayed >= 1 ? <Fade in={fadesList[0]}><div><ExerciseSet setNumber={1} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null}
+                    {setsDisplayed > 1 ? <Fade in={fadesList[1]}><div><ExerciseSet setNumber={2} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null}
+                    {setsDisplayed > 2 ? <Fade in={fadesList[2]}><div><ExerciseSet setNumber={3} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null}
+                    {setsDisplayed > 3 ? <Fade in={fadesList[3]}><div><ExerciseSet setNumber={4} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null}
+                    {setsDisplayed > 4 ? <Fade in={fadesList[4]}><div><ExerciseSet setNumber={5} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null}
+                    {setsDisplayed > 5 ? <Fade in={fadesList[5]}><div><ExerciseSet setNumber={6} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null} */}
+                    {/* {setsDisplayed > 6 ? <Fade in={fadesList[6]}><div><ExerciseSet setNumber={7} setsDisplayed={setsDisplayed} removeSet={removeSet}/></div></Fade> : null} */}
+
+                    {[0, 1, 2, 3, 4, 5, 6].map((i) =>
+
+                        <Fade in={fadesList[i]} 
+                            timeout={fadeTimeout} 
+                            unmountOnExit> 
+                            <div>
+                                <ExerciseSet setNumber={i} 
+                                    setsDisplayed={setsDisplayed} 
+                                    removeSet={removeSet} 
+                                    addSet={addSet}
+                                    weightRefs={weightRefs}
+                                    repRefs={repRefs} />
+                            </div>
+                        </Fade>
+                    
+                    )}
+
+                    {/* <Fade in={fadesList[0]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={0} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet} /></div></Fade>
+                    <Fade in={fadesList[1]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={1} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade>
+                    <Fade in={fadesList[2]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={2} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade>
+                    <Fade in={fadesList[3]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={3} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade>
+                    <Fade in={fadesList[4]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={4} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade>
+                    <Fade in={fadesList[5]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={5} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade>
+                    <Fade in={fadesList[6]} timeout={fadeTimeout} unmountOnExit><div><ExerciseSet setNumber={6} setsDisplayed={setsDisplayed} removeSet={removeSet} addSet={addSet}/></div></Fade> */}
+
 
                     <Grid container align="center">
 
                         <Grid item xs={12}>
+                            {/* <Fade in={buttonFade}> */}
                             <Button style={{fontSize: '13px', width: '90%', minHeight: '30px', margin: 5, backgroundColor: theme.palette.secondary.light}} size="small" variant="contained"  onClick={addSet}>
                                 Add Set
                             </Button>
+                            {/* </Fade> */}
                         </Grid>
 
                     </Grid>
@@ -145,6 +209,10 @@ const ExerciseMain = ({ toggleExercise }) => {
                  </Paper>
 
             </Box>
+            {/* <FormControlLabel
+             control={<Switch checked={buttonFade} onChange={handleChange} />}
+                label="Show"
+                /> */}
             
         </div>   
     )

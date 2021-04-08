@@ -8,12 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/styles';
 
 // components
-import Workout from './components/workout.component';
-import SignUp from './components/SignUpcomponent';
-import Logout from './components/logout.component'
-import BottomNav from './components/bottomNav.component'
+import Workout from './components/Workout.component';
+import SignUp from './components/SignUp.component';
+import Logout from './components/Logout.component'
+import BottomNav from './components/BottomNav.component'
 import LogIn from './components/LogIn.component'
-import AccountDrawer from './components/LogIn.component'
 
 // style
 import theme from './style/theme';
@@ -48,15 +47,13 @@ export default function App() {
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
   
 
   return (
     <ThemeProvider theme={theme}>
 
       <CssBaseline />
-
-        {/* {loggedIn ? <Typography>Hello {username}</Typography> : null} */}
 
         {loggedIn ? 
           <Route exact path="/" render={() => <Workout />} />

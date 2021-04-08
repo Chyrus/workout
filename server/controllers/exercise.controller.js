@@ -102,6 +102,13 @@ getExerciseById = async (req, res) => {
 }
 
 getExercises = async (req, res) => {
+
+    res.setHeader("Access-Control-Allow-Origin", "*")
+res.setHeader("Access-Control-Allow-Credentials", "true");
+res.setHeader("Access-Control-Max-Age", "1800");
+res.setHeader("Access-Control-Allow-Headers", "content-type");
+res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" );
+
     await Exercise.find({}, (err, exercises) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -112,7 +119,7 @@ getExercises = async (req, res) => {
                 .json({ success: false, error: `Exercise not found` })
         }
         return res.status(200).json({ success: true, data: exercises })
-    }).catch(err => console.log(err))
+    }).sort('name').catch(err => console.log(err))
 }
 
 module.exports = {

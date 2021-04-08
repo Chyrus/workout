@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 // Components
-import DateTimePicker from './dateTimePicker.component'
-import ExerciseMain from './exerciseMain.component'
+import DateTimePicker from './DateTimePicker.component'
+import ExerciseMain from './ExerciseMain.component'
 
  // Other
  import 'date-fns';

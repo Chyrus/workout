@@ -126,7 +126,7 @@ export default function LogIn( { updateUser}) {
             label="Remember me"
           /> */}
           <Button
-            // type="submit"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"

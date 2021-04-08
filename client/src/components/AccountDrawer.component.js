@@ -37,30 +37,21 @@ export default function AccountDrawer( {drawerOpen, setDrawerOpen, toggleDrawer 
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+
+<Divider />
       <List>
           <ListItem component={NavLink} to='/logout' button key='Log Out'>
             <ListItemIcon  style={{minWidth: '30px'}}><ExitToAppIcon /></ListItemIcon>
             <ListItemText primary='Log Out' />
             </ListItem>
       </List>
-      {/* <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
+      
     </div>
   );
 
   return (
     <div>
         <React.Fragment>
-
-        {/* <BottomNavigationAction icon={<AccountCircleIcon onClick={toggleDrawer(true)}/>} /> */}
-          {/* <Button onClick={toggleDrawer(true)}>Right</Button> */}
           <Drawer anchor={'right'} open={drawerOpen} onClose={toggleDrawer(false)}>
             {list('right')}
           </Drawer>
