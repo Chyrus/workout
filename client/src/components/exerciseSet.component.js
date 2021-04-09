@@ -41,12 +41,14 @@ const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, 
                                 InputProps={{
                                     onKeyUp: event => {
                                       const { keyCode } = event;
-                                      console.log(keyCode);
+                                      // console.log(keyCode);
                                       if (keyCode === 13) {
                                         repRefs.current[setNumber].current.focus();
                                       } else if (keyCode === 8 && setsDisplayed > 1 || keyCode === 46 && setsDisplayed > 1) {
-                                        removeSet();
-                                        repRefs.current[setNumber - 1].current.focus();
+                                        if (weightRefs.current[setNumber].current.value == "") {
+                                          removeSet();
+                                          repRefs.current[setNumber - 1].current.focus();
+                                        }
                                       }
                                     }}}
                             />
@@ -61,11 +63,17 @@ const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, 
                                 InputProps={{
                                     onKeyUp: event => {
                                       const { keyCode } = event;
-                                      console.log(keyCode);
+                                      // console.log(keyCode);
                                       if (keyCode === 13) {
                                         addSet();
                                       } else if (keyCode === 46 || keyCode === 8 || keyCode === 67) {
-                                        weightRefs.current[setNumber].current.focus();
+                                          console.log(repRefs.current[setNumber].current.value)
+                                          if (repRefs.current[setNumber].current.value == "") {
+                                            weightRefs.current[setNumber].current.focus();
+
+                                          }
+                                        
+                                        
                                       }
                                     }}}
                             />
