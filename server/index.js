@@ -5,6 +5,7 @@ const cors = require('cors')
 const dbConnection = require('./database')
 const userRouter = require('./routes/user')
 const exerciseRouter = require('./routes/exercise.router')
+const saveWorkoutRouter = require('./routes/saveWorkout.router')
 const MongoStore = require('connect-mongo')(session);
 const passport = require('./passport');
 const path = require('path');
@@ -42,7 +43,11 @@ app.use(express.static(path.resolve(__dirname + '/../client/build/')))
 // Routes
 app.use('/user', userRouter)
 
+app.use('/api/save', saveWorkoutRouter)
+
 app.use('/api', exerciseRouter)
+
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../client/build/index.html'));

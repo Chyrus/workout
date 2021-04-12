@@ -11,9 +11,20 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 
-const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, repRefs }) => {
+const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, repRefs, workoutData, setWorkoutData, exerciseNumber }) => {
 
     const theme = useTheme();
+
+    const handleChange = (event) => {
+
+      const oldData = workoutData;
+      const thisSet = oldData[exerciseNumber].data[setNumber];
+      thisSet[event.target.name] = event.target.value;
+      oldData[exerciseNumber].data[setNumber] = thisSet;
+      setWorkoutData(oldData);
+      console.log(workoutData)
+
+    }
 
     return (
         <div class="exerciseSet">
@@ -35,8 +46,9 @@ const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, 
                         <Grid item xs={4}>
                         <Typography variant="body2">
                             {/* <form> */}
-                            <TextField autoFocus style={{marginTop: '2px', marginBottom: '2px', marginRight: '5px'}} type="number" size="small" id="outlined" variant="outlined" 
-                                
+                            <TextField autoFocus style={{marginTop: '2px', marginBottom: '2px', marginRight: '5px'}} name="weight" type="number" size="small" id="outlined" variant="outlined" 
+
+                                onChange={handleChange}
                                 inputRef={weightRefs.current[setNumber]}
                                 InputProps={{
                                     onKeyUp: event => {
@@ -59,7 +71,8 @@ const ExerciseSet = ({ setNumber, setsDisplayed, removeSet, addSet, weightRefs, 
                         <Grid item xs={2}>
                         <Typography variant="body2">
                             {/* <form> */}
-                            <TextField type="number" inputRef={repRefs.current[setNumber]} size="small" id="outlined" variant="outlined" 
+                            <TextField type="number" inputRef={repRefs.current[setNumber]} size="small"  name="reps" id="outlined" variant="outlined" 
+                                onChange={handleChange}
                                 InputProps={{
                                     onKeyUp: event => {
                                       const { keyCode } = event;

@@ -33,10 +33,35 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const ExerciseMain = ({ toggleExercise }) => {
+const ExerciseMain = ({ toggleExercise, exerciseNumber, workoutData, setWorkoutData }) => {
 
     const classes = useStyles();
     const theme = useTheme();
+
+
+    const handleDropdownChange = (event) => {
+
+        const oldData = workoutData;
+        const thisExercise = oldData[exerciseNumber];
+        const idSplit = event.target.value.split(':::') 
+        thisExercise.exerciseId = idSplit[0]
+        thisExercise.exerciseName = idSplit[1]
+        oldData[exerciseNumber] = thisExercise;
+        setWorkoutData(oldData);
+        console.log(workoutData)
+
+    }
+
+    const handleDeleteExercise = () => {
+        const oldWorkout = workoutData;
+        oldWorkout[exerciseNumber] = {"data": [{   weight: "",
+                reps: "",
+                setNumber: "1",
+            }, null, null, null, null, null, null], "exerciseId": "", "exerciseName": ""}
+        setWorkoutData(oldWorkout);
+        console.log(workoutData);
+        toggleExercise(exerciseNumber);
+    }
 
     const [setsDisplayed, setSetsDisplayed] = React.useState( 1 );
     const [exercisesList, setExercisesList] = React.useState( [] );
@@ -57,7 +82,7 @@ const ExerciseMain = ({ toggleExercise }) => {
                     return x; 
                 });
                 setExercisesList(list);
-                console.log(fadesList)
+                // console.log(exercisesList)
         })}, [])
 
     const addSet = () => {
@@ -66,6 +91,17 @@ const ExerciseMain = ({ toggleExercise }) => {
         setFadesList(oldArr);
         if (setsDisplayed < 7) {setSetsDisplayed(setsDisplayed + 1);
             scroll.scrollToBottom();
+
+        const oldWorkout = workoutData;
+        const oldSet = oldWorkout[exerciseNumber].data[setsDisplayed]
+        if (oldSet === null) {
+            const newSet = {weight: "",
+                            reps: "",
+                            setNumber: setsDisplayed + 1,}
+            oldWorkout[exerciseNumber].data[setsDisplayed] = newSet;
+            setWorkoutData(oldWorkout);
+            console.log(workoutData)
+        }
         }
         
 
@@ -79,11 +115,13 @@ const ExerciseMain = ({ toggleExercise }) => {
             setFadesList(oldArr);
 
             setSetsDisplayed(setsDisplayed - 1);
-            scroll.scrollToBottom();
-
-            
+            scroll.scrollToBottom();    
         }
         
+        const oldWorkout = workoutData;
+        oldWorkout[exerciseNumber].data[setsDisplayed - 1] = null;
+        setWorkoutData(oldWorkout);
+        console.log(workoutData)
     }
 
     return (
@@ -105,13 +143,14 @@ const ExerciseMain = ({ toggleExercise }) => {
 
                                         <NativeSelect
                                         className={classes.selectEmpty}
-                                        inputProps={{
-                                            name: 'name',
-                                        }}
+                                        onChange={handleDropdownChange}
+                                        // inputProps={{
+                                        //     name: 'name',
+                                        // }}
                                         >
                                         <option aria-label="None" value="" placeholder>Select exercise</option>
                                         {exercisesList.map((exercise) => 
-                                                <option value="benchPress">{exercise.name}</option>
+                                                <option value={exercise._id + ":::" + exercise.name}>{exercise.name}</option>
                                         )}
 
                                         </NativeSelect>
@@ -121,7 +160,7 @@ const ExerciseMain = ({ toggleExercise }) => {
                                  </Grid>
                 
                                 <Grid item xs={2}>
-                                    <IconButton edge="end" aria-label="delete" onClick={toggleExercise}>
+                                    <IconButton edge="end" aria-label="delete" onClick={handleDeleteExercise}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </Grid>
@@ -179,7 +218,10 @@ const ExerciseMain = ({ toggleExercise }) => {
                                     removeSet={removeSet} 
                                     addSet={addSet}
                                     weightRefs={weightRefs}
-                                    repRefs={repRefs} />
+                                    repRefs={repRefs}
+                                    workoutData={workoutData}
+                                    setWorkoutData={setWorkoutData}
+                                    exerciseNumber={exerciseNumber} />
                             </div>
                         </Fade>
                     
